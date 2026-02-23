@@ -57,9 +57,9 @@ export default function LeaderboardView() {
         <div className="flex flex-col gap-8 w-full max-w-lg mx-auto p-4 pb-20">
             <div className="flex items-center justify-between mb-2">
                 <div>
-                    <h2 className="text-4xl font-black italic uppercase tracking-tighter">Asado<span className="text-accent-primary">Ranking</span></h2>
+                    <h2 className="text-4xl font-black italic uppercase tracking-tighter">Demo<span className="text-accent-primary">Ranking</span></h2>
                     <p className="text-text-muted text-xs font-bold uppercase tracking-widest mt-1">
-                        {isSimulated ? 'Modo Simulación' : 'Sincronizado en Vivo'}
+                        {isSimulated ? 'Modo Simulación' : 'Participación del Patriarca'}
                     </p>
                 </div>
                 <div className="p-4 rounded-[1.5rem] bg-accent-primary/10 text-accent-primary shadow-inner shadow-accent-primary/5 transform -rotate-6">

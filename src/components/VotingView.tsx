@@ -3,43 +3,55 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, doc, getDoc, updateDoc, increment } from 'firebase/firestore';
-import { CheckCircle2, Loader2, Star, Flame, Award } from 'lucide-react';
+import { CheckCircle2, Loader2, Star, Flame, Award, Info, Heart } from 'lucide-react';
 
 interface VotingViewProps {
     username: string;
 }
 
-interface Dessert {
+interface AppNameOption {
     id: string;
     name: string;
     image: string;
     description: string;
 }
 
-const DESSERTS: Dessert[] = [
+const APP_NAMES: AppNameOption[] = [
     {
-        id: 'chocotorta',
-        name: 'Chocotorta',
-        image: 'https://images.unsplash.com/photo-1579306194872-64d3b7bac4c2?auto=format&fit=crop&q=80&w=500',
-        description: 'La reina de las fiestas.'
+        id: 'tranquera_adentro',
+        name: 'Tranquera Adentro',
+        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=500',
+        description: '"Dejando las preocupaciones del lado de afuera".'
     },
     {
-        id: 'flan',
-        name: 'Flan con Dulce',
-        image: 'https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&q=80&w=500',
-        description: 'Clásico imperecedero.'
+        id: 'fuego_sagrado',
+        name: 'Fuego Sagrado',
+        image: 'https://images.unsplash.com/photo-1520110120185-3333330691e9?auto=format&fit=crop&q=80&w=500',
+        description: 'La mística del ritual que nos une.'
     },
     {
-        id: 'helado',
-        name: 'Helado Variado',
-        image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&q=80&w=500',
-        description: 'Refrescante y para todos.'
+        id: 'mesa_grande',
+        name: 'Mesa Grande',
+        image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=500',
+        description: 'Humildad, familia y unión.'
     },
     {
-        id: 'vigilante',
-        name: 'Queso y Dulce',
-        image: 'https://images.unsplash.com/photo-1623934199716-bc34495ed18a?auto=format&fit=crop&q=80&w=500',
-        description: 'El postre de los campeones.'
+        id: 'brasas_y_abrazos',
+        name: 'Brasas y Abrazos',
+        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=500',
+        description: 'Parrilla llena y corazón contento.'
+    },
+    {
+        id: 'la_herencia_del_1',
+        name: 'La Herencia del 1°',
+        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=500',
+        description: '40 años de tradición familiar.'
+    },
+    {
+        id: 'asado_tracker',
+        name: 'AsadoTracker',
+        image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=500',
+        description: 'El nombre actual (tecnológico).'
     }
 ];
 
@@ -52,7 +64,7 @@ export default function VotingView({ username }: VotingViewProps) {
         const checkVote = async () => {
             const isSimulated = localStorage.getItem('asado_simulated') !== 'false';
             if (isSimulated) {
-                const hasVotedLocal = localStorage.getItem(`asado_voted_${username}`);
+                const hasVotedLocal = localStorage.getItem(`asado_voted_name_${username}`);
                 if (hasVotedLocal) setVoted(true);
                 setLoading(false);
                 return;
@@ -60,7 +72,7 @@ export default function VotingView({ username }: VotingViewProps) {
 
             try {
                 const userDoc = await getDoc(doc(db, 'profiles', username));
-                if (userDoc.exists() && userDoc.data().hasVoted) {
+                if (userDoc.exists() && userDoc.data().hasVotedName) {
                     setVoted(true);
                 }
             } catch (err) {
@@ -71,32 +83,31 @@ export default function VotingView({ username }: VotingViewProps) {
         checkVote();
     }, [username]);
 
-    const handleVote = async (dessertId: string) => {
-        setVotingInProgress(dessertId);
+    const handleVote = async (nameId: string) => {
+        setVotingInProgress(nameId);
         const isSimulated = localStorage.getItem('asado_simulated') !== 'false';
 
         try {
             if (isSimulated) {
-                localStorage.setItem(`asado_voted_${username}`, 'true');
+                localStorage.setItem(`asado_voted_name_${username}`, 'true');
             } else {
-                // 1. Record the vote
-                await addDoc(collection(db, 'votes'), {
+                // Record the name vote
+                await addDoc(collection(db, 'name_votes'), {
                     username,
-                    dessertId,
+                    nameId,
                     timestamp: new Date().toISOString()
                 });
 
-                // 2. Update user points (10 points per vote)
+                // Update user status
                 const userRef = doc(db, 'profiles', username);
                 await updateDoc(userRef, {
-                    asado_points: increment(10),
-                    hasVoted: true
+                    asado_points: increment(20), // Double points for naming!
+                    hasVotedName: true
                 });
             }
             setVoted(true);
         } catch (err) {
             console.error("Error voting:", err);
-            alert("Error al registrar el voto. Intenta de nuevo.");
         } finally {
             setVotingInProgress(null);
         }
@@ -106,7 +117,7 @@ export default function VotingView({ username }: VotingViewProps) {
         return (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
                 <Loader2 className="animate-spin text-accent-primary" size={48} />
-                <p className="text-text-muted font-bold uppercase tracking-widest">Verificando votos...</p>
+                <p className="text-text-muted font-bold uppercase tracking-widest text-center">Verificando sufragio del Patriarca...</p>
             </div>
         );
     }
@@ -114,16 +125,23 @@ export default function VotingView({ username }: VotingViewProps) {
     if (voted) {
         return (
             <div className="flex flex-col items-center justify-center py-20 text-center gap-8 animate-in fade-in zoom-in duration-500">
-                <div className="w-32 h-32 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 border-4 border-green-500/30">
-                    <CheckCircle2 size={64} strokeWidth={2.5} />
+                <div className="w-40 h-40 rounded-full bg-accent-primary/20 flex items-center justify-center text-accent-primary border-4 border-accent-primary/30 shadow-[0_0_50px_rgba(255,149,0,0.2)]">
+                    <Heart size={80} strokeWidth={2.5} className="animate-pulse" />
                 </div>
-                <div className="space-y-2">
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">¡Voto Registrado!</h2>
-                    <p className="text-text-muted text-xl">Sumaste <span className="text-accent-primary font-black">10 Asado Points</span>.</p>
+                <div className="space-y-3">
+                    <h2 className="text-5xl font-black uppercase tracking-tighter">¡Gracias, Patriarca!</h2>
+                    <p className="text-text-muted text-xl max-w-sm mx-auto leading-tight">
+                        Tu voto por el nombre ha sido registrado con honor.
+                    </p>
                 </div>
-                <div className="bg-white/5 border border-white/10 p-6 rounded-3xl max-w-xs transition-transform hover:scale-105">
-                    <p className="text-sm font-bold text-white/60">
-                        "Tu opinión es inmutable y ha sido grabada en el Gran Registro del Asador."
+
+                <div className="glass p-8 rounded-[2.5rem] border-accent-primary/20 bg-accent-primary/10 max-w-sm">
+                    <div className="flex items-center gap-3 mb-3">
+                        <Info className="text-accent-primary" size={24} />
+                        <span className="text-xs uppercase font-black tracking-widest text-accent-primary">Nota de la App</span>
+                    </div>
+                    <p className="text-white font-bold text-lg leading-tight italic">
+                        "¡Así de fácil va a ser votar por el Mejor Postre el próximo 1° de Mayo! Solo tocas la foto y listo."
                     </p>
                 </div>
             </div>
@@ -131,71 +149,65 @@ export default function VotingView({ username }: VotingViewProps) {
     }
 
     return (
-        <div className="flex flex-col gap-8 pb-24">
-            <div className="space-y-2">
+        <div className="flex flex-col gap-8 pb-32">
+            <div className="space-y-3">
                 <div className="flex items-center gap-3">
                     <div className="p-3 rounded-2xl bg-accent-primary/20 text-accent-primary">
-                        <Award size={28} />
+                        <Award size={32} />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">El Gran Jurado</h2>
+                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa</h2>
                 </div>
-                <p className="text-text-muted text-lg">Seleccioná el postre que merece el podio del 1° de Mayo.</p>
+                <div className="space-y-2">
+                    <h3 className="text-2xl font-bold text-white">¿Cómo deberíamos llamarnos?</h3>
+                    <p className="text-text-muted text-lg leading-snug">
+                        Probá el sistema de voto eligiendo el nombre que mejor nos represente después de 40 años de historia.
+                    </p>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {DESSERTS.map((dessert) => (
-                    <div key={dessert.id} className="group relative glass rounded-[2.5rem] overflow-hidden border-white/5 shadow-2xl transition-all hover:scale-[1.02] hover:border-accent-primary/30">
-                        {/* Image Container */}
-                        <div className="h-56 w-full relative overflow-hidden">
+            <div className="grid grid-cols-1 gap-6">
+                {APP_NAMES.map((nameOption) => (
+                    <div key={nameOption.id} className="group relative glass rounded-[2.5rem] overflow-hidden border-white/5 shadow-2xl transition-all hover:scale-[1.02] hover:border-accent-primary/30">
+                        <div className="h-48 w-full relative overflow-hidden">
                             <img
-                                src={dessert.image}
-                                alt={dessert.name}
+                                src={nameOption.image}
+                                alt={nameOption.name}
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
-
-                            {/* Floating tag */}
-                            <div className="absolute top-4 right-4 py-1.5 px-4 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center gap-2">
-                                <Star className="text-yellow-500 fill-yellow-500" size={14} />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white">Favorito</span>
-                            </div>
                         </div>
 
-                        {/* Content */}
                         <div className="p-8 space-y-4">
                             <div>
-                                <h3 className="text-2xl font-black uppercase tracking-tight text-white">{dessert.name}</h3>
-                                <p className="text-text-muted text-sm font-medium">{dessert.description}</p>
+                                <h3 className="text-3xl font-black uppercase tracking-tight text-white">{nameOption.name}</h3>
+                                <p className="text-text-muted text-lg font-medium">{nameOption.description}</p>
                             </div>
 
                             <button
-                                onClick={() => handleVote(dessert.id)}
+                                onClick={() => handleVote(nameOption.id)}
                                 disabled={votingInProgress !== null}
-                                className={`w-full py-5 rounded-3xl font-black uppercase tracking-tighter text-lg flex items-center justify-center gap-3 transition-all ${votingInProgress === dessert.id
+                                className={`w-full py-6 rounded-3xl font-black uppercase tracking-tighter text-xl flex items-center justify-center gap-3 transition-all ${votingInProgress === nameOption.id
                                         ? 'bg-white/10 text-white/40 cursor-not-allowed'
                                         : 'bg-white text-black hover:bg-accent-primary hover:text-white active:scale-95 shadow-[0_15px_30px_rgba(255,255,255,0.1)]'
                                     }`}
                             >
-                                {votingInProgress === dessert.id ? (
-                                    <Loader2 className="animate-spin" size={24} />
+                                {votingInProgress === nameOption.id ? (
+                                    <Loader2 className="animate-spin" size={28} />
                                 ) : (
                                     <>
-                                        VOTAR ESTE
-                                        <Flame size={20} />
+                                        VOTAR ESTE NOMBRE
+                                        <Flame size={24} />
                                     </>
                                 )}
                             </button>
                         </div>
-
-                        {/* Visual accent */}
-                        <div className="absolute top-0 left-0 w-2 h-full bg-accent-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                 ))}
             </div>
 
             <div className="text-center py-6 border-t border-white/5 mt-4">
                 <p className="text-[10px] uppercase font-black tracking-[0.3em] text-white/20">
-                    SISTEMA DE VOTACIÓN INALTERABLE v3.0
+                    SISTEMA DE VOTACIÓN INALTERABLE v4.0 (Patriarcas Edition)
                 </p>
             </div>
         </div>
