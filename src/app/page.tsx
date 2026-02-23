@@ -1,95 +1,110 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Trophy, Cake, LogOut, LayoutGrid } from 'lucide-react';
+import { Trophy, Cake, LogOut, LayoutGrid, ShieldCheck } from 'lucide-react';
 import LoginView from '@/components/LoginView';
 import LeaderboardView from '@/components/LeaderboardView';
 import VotingView from '@/components/VotingView';
+import RulesView from '@/components/RulesView';
 import SimulationToggle from '@/components/SimulationToggle';
 
 export default function Home() {
   const [user, setUser] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'ranking' | 'voto'>('ranking');
+  const [activeTab, setActiveTab] = useState<'ranking' | 'voto' | 'reglas'>('ranking');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check for existing session
     const savedUser = localStorage.getItem('asado_user');
-    if (savedUser) setUser(savedUser);
+    if (savedUser) {
+      setUser(savedUser);
+    }
     setLoading(false);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('asado_user');
+    localStorage.removeItem('asado_wish');
+    setUser(null);
+  };
 
   if (loading) return null;
 
   if (!user) {
-    return (
-      <>
-        <LoginView onLogin={setUser} />
-        <SimulationToggle />
-      </>
-    );
+    return <LoginView onLogin={(username) => setUser(username)} />;
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pb-32 selection:bg-accent-primary selection:text-black">
-      {/* Minimal Header */}
-      <header className="px-6 py-6 flex items-center justify-between pointer-events-none sticky top-0 z-30 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5">
-        <div className="pointer-events-auto">
-          <h1 className="text-2xl font-black italic uppercase tracking-tighter">
+    <main className="min-h-screen bg-[#0a0a0a] text-white">
+      {/* Header */}
+      <header className="fixed top-0 left-0 w-full z-50 glass-dark border-b border-white/5 py-4 px-6 flex justify-between items-center shadow-xl">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-xl bg-accent-primary/20 text-accent-primary">
+            <LayoutGrid size={24} strokeWidth={2.5} />
+          </div>
+          <h1 className="text-2xl font-black uppercase tracking-tighter italic">
             Asado<span className="text-gradient">Tracker</span>
           </h1>
-          <p className="text-[10px] text-accent-primary font-black uppercase tracking-[0.2em]">{user}</p>
         </div>
-
         <button
-          onClick={() => {
-            localStorage.removeItem('asado_user');
-            localStorage.removeItem('asado_wish');
-            setUser(null);
-          }}
-          className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-red-500/20 hover:text-red-500 transition-all border border-white/5 pointer-events-auto shadow-lg"
+          onClick={handleLogout}
+          className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-red-500/20 hover:border-red-500/20 transition-all flex items-center gap-2 group"
           title="Cerrar Sesión"
         >
-          <LogOut size={24} />
+          <span className="text-[10px] font-black uppercase tracking-widest group-hover:block hidden">Salir</span>
+          <LogOut size={20} />
         </button>
       </header>
 
       {/* Main Content Area */}
-      <main className="container max-w-lg mx-auto pt-4 px-4">
-        <div className="animate-in fade-in duration-700">
-          {activeTab === 'ranking' ? <LeaderboardView /> : <VotingView />}
-        </div>
-      </main>
+      <div className="pt-24 px-6 pb-32 max-w-2xl mx-auto">
+        {activeTab === 'ranking' && <LeaderboardView />}
+        {activeTab === 'voto' && <VotingView username={user} />}
+        {activeTab === 'reglas' && <RulesView />}
+      </div>
 
-      {/* Premium WhatsApp-style Bottom Nav */}
-      <nav className="fixed bottom-0 left-0 w-full px-4 pb-8 pt-4 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/95 to-transparent z-40">
-        <div className="max-w-md mx-auto glass rounded-[2.5rem] p-3 border border-white/10 shadow-2xl flex gap-3 h-24">
+      {/* Admin/Settings (Floating) */}
+      <div className="fixed bottom-32 right-6 z-50">
+        <SimulationToggle />
+      </div>
+
+      {/* Senior-Friendly Bottom Navigation (WhatsApp Style) - 3 TABS */}
+      <nav className="fixed bottom-0 left-0 w-full z-50 glass-dark border-t border-white/10 px-4 py-3 pb-8 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div className="max-w-md mx-auto grid grid-cols-3 gap-3">
           <button
             onClick={() => setActiveTab('ranking')}
-            className={`flex-1 rounded-[1.8rem] flex flex-col items-center justify-center gap-1 transition-all duration-500 relative overflow-hidden ${activeTab === 'ranking'
-                ? 'bg-accent-primary text-black shadow-xl shadow-accent-primary/30 scale-100'
-                : 'text-zinc-500 hover:text-zinc-300 scale-95 opacity-70'
+            className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[2rem] transition-all relative overflow-hidden ${activeTab === 'ranking'
+                ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
+                : 'text-white/40 hover:bg-white/5'
               }`}
           >
-            <Trophy size={activeTab === 'ranking' ? 32 : 28} strokeWidth={activeTab === 'ranking' ? 3 : 2} />
-            <span className="text-[11px] font-black uppercase tracking-widest">Ranking</span>
-            {activeTab === 'ranking' && <div className="absolute inset-0 bg-white/10 animate-pulse"></div>}
+            <Trophy size={32} strokeWidth={activeTab === 'ranking' ? 3 : 2} />
+            <span className="text-xs font-black uppercase tracking-widest">Ranking</span>
           </button>
 
           <button
             onClick={() => setActiveTab('voto')}
-            className={`flex-1 rounded-[1.8rem] flex flex-col items-center justify-center gap-1 transition-all duration-500 relative overflow-hidden ${activeTab === 'voto'
-                ? 'bg-accent-primary text-black shadow-xl shadow-accent-primary/30 scale-100'
-                : 'text-zinc-500 hover:text-zinc-300 scale-95 opacity-70'
+            className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[2rem] transition-all relative overflow-hidden ${activeTab === 'voto'
+                ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
+                : 'text-white/40 hover:bg-white/5'
               }`}
           >
-            <Cake size={activeTab === 'voto' ? 32 : 28} strokeWidth={activeTab === 'voto' ? 3 : 2} />
-            <span className="text-[11px] font-black uppercase tracking-widest">Votar</span>
-            {activeTab === 'voto' && <div className="absolute inset-0 bg-white/10 animate-pulse"></div>}
+            <Cake size={32} strokeWidth={activeTab === 'voto' ? 3 : 2} />
+            <span className="text-xs font-black uppercase tracking-widest">Votar</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('reglas')}
+            className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[2rem] transition-all relative overflow-hidden ${activeTab === 'reglas'
+                ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
+                : 'text-white/40 hover:bg-white/5'
+              }`}
+          >
+            <ShieldCheck size={32} strokeWidth={activeTab === 'reglas' ? 3 : 2} />
+            <span className="text-xs font-black uppercase tracking-widest">Reglas</span>
           </button>
         </div>
       </nav>
-
-      <SimulationToggle />
-    </div>
+    </main>
   );
 }
