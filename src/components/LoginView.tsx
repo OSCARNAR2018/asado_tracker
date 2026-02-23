@@ -65,7 +65,7 @@ export default function LoginView({ onLogin }: LoginViewProps) {
 
                 <form onSubmit={handleSubmit} className="w-full space-y-5">
                     <div className="space-y-2 text-left">
-                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-accent-primary/70 ml-2">¿Quién sos hoy?</label>
+                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-accent-primary/70 ml-2">entra con tu nombre o apodo</label>
                         <div className="relative group">
                             <User className="absolute left-5 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-accent-primary transition-colors" size={24} />
                             <input
@@ -80,7 +80,7 @@ export default function LoginView({ onLogin }: LoginViewProps) {
                     </div>
 
                     <div className="space-y-2 text-left">
-                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-accent-primary/70 ml-2">¿Qué postre querés hoy?</label>
+                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-accent-primary/70 ml-2">¿que postre te gusta?</label>
                         <div className="relative group">
                             <Cake className="absolute left-5 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-accent-primary transition-colors" size={24} />
                             <input
@@ -92,6 +92,9 @@ export default function LoginView({ onLogin }: LoginViewProps) {
                                 required
                             />
                         </div>
+                        <p className="text-[10px] text-white/30 italic ml-2 mt-1">
+                            ... porque después los vamos a votar ...
+                        </p>
                     </div>
 
                     {/* Personalized button text */}

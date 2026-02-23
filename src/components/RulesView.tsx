@@ -47,13 +47,13 @@ export default function RulesView() {
 
             <div className="space-y-4">
                 {rules.map((rule) => (
-                    <div key={rule.id} className="glass p-6 rounded-[2rem] border-white/5 flex gap-5 items-start">
-                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10 shrink-0">
+                    <div key={rule.id} className="glass p-8 rounded-[2.5rem] border-white/5 flex gap-6 items-start">
+                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 shrink-0">
                             {rule.icon}
                         </div>
-                        <div className="space-y-1">
-                            <h3 className="text-xl font-bold text-white">{rule.title}</h3>
-                            <p className="text-text-muted text-sm leading-relaxed">
+                        <div className="space-y-2">
+                            <h3 className="text-2xl font-black text-white leading-tight">{rule.title}</h3>
+                            <p className="text-text-muted text-lg leading-relaxed font-medium">
                                 {rule.description}
                             </p>
                         </div>
@@ -61,12 +61,12 @@ export default function RulesView() {
                 ))}
             </div>
 
-            <div className="glass p-6 rounded-[2rem] border-accent-primary/20 bg-accent-primary/5 mt-4">
-                <div className="flex items-center gap-3 mb-2">
-                    <Info className="text-accent-primary" size={20} />
-                    <span className="text-[10px] uppercase font-black tracking-widest text-accent-primary">Nota del Sistema</span>
+            <div className="glass p-8 rounded-[2.5rem] border-accent-primary/20 bg-accent-primary/5 mt-4">
+                <div className="flex items-center gap-3 mb-3">
+                    <Info className="text-accent-primary" size={24} />
+                    <span className="text-xs uppercase font-black tracking-widest text-accent-primary">Nota del Sistema</span>
                 </div>
-                <p className="text-white font-bold leading-tight">
+                <p className="text-white font-bold text-xl leading-tight italic">
                     "El asado es el arte de la paciencia y el buen comer. Disfrute bajo su propia responsabilidad."
                 </p>
             </div>

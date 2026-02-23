@@ -63,8 +63,8 @@ export default function Home() {
         {activeTab === 'reglas' && <RulesView />}
       </div>
 
-      {/* Admin/Settings (Floating) */}
-      <div className="fixed bottom-32 right-6 z-50">
+      {/* Admin/Settings (Floating - MOVED TO TOP to avoid overlap) */}
+      <div className="fixed top-24 right-6 z-50">
         <SimulationToggle />
       </div>
 
@@ -74,8 +74,8 @@ export default function Home() {
           <button
             onClick={() => setActiveTab('ranking')}
             className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[2rem] transition-all relative overflow-hidden ${activeTab === 'ranking'
-                ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
-                : 'text-white/40 hover:bg-white/5'
+              ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
+              : 'text-white/40 hover:bg-white/5'
               }`}
           >
             <Trophy size={32} strokeWidth={activeTab === 'ranking' ? 3 : 2} />
@@ -85,8 +85,8 @@ export default function Home() {
           <button
             onClick={() => setActiveTab('voto')}
             className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[2rem] transition-all relative overflow-hidden ${activeTab === 'voto'
-                ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
-                : 'text-white/40 hover:bg-white/5'
+              ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
+              : 'text-white/40 hover:bg-white/5'
               }`}
           >
             <Cake size={32} strokeWidth={activeTab === 'voto' ? 3 : 2} />
@@ -96,8 +96,8 @@ export default function Home() {
           <button
             onClick={() => setActiveTab('reglas')}
             className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[2rem] transition-all relative overflow-hidden ${activeTab === 'reglas'
-                ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
-                : 'text-white/40 hover:bg-white/5'
+              ? 'bg-accent-primary text-white shadow-[0_10px_20px_rgba(255,149,0,0.3)]'
+              : 'text-white/40 hover:bg-white/5'
               }`}
           >
             <ShieldCheck size={32} strokeWidth={activeTab === 'reglas' ? 3 : 2} />

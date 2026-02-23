@@ -13,8 +13,8 @@ interface LeaderboardItem {
 }
 
 const MOCK_DATA: LeaderboardItem[] = [
-    { username: 'Asador Pro (Sim)', points: 1250, wish: 'Chocotorta helada' },
-    { username: 'Tío Alberto (Sim)', points: 980, wish: 'Flan con mucho dulce' },
+    { username: 'Dani el Capo (Sim)', points: 1250, wish: 'Chocotorta helada' },
+    { username: 'Zunilda (Sim)', points: 980, wish: 'Flan con mucho dulce' },
     { username: 'Mago del Carbón (Sim)', points: 850, wish: 'Queso y dulce' },
 ];
 
@@ -83,8 +83,8 @@ export default function LeaderboardView() {
                     >
                         <div className="flex items-center gap-5">
                             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl shadow-lg ${index === 0 ? 'bg-gradient-to-br from-accent-primary to-accent-secondary text-black shadow-accent-primary/40' :
-                                    index === 1 ? 'bg-zinc-300 text-black' :
-                                        index === 2 ? 'bg-amber-700 text-white' : 'bg-white/5 text-white/40'
+                                index === 1 ? 'bg-zinc-300 text-black' :
+                                    index === 2 ? 'bg-amber-700 text-white' : 'bg-white/5 text-white/40'
                                 }`}>
                                 {index + 1}
                             </div>
