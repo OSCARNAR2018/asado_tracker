@@ -63,10 +63,8 @@ export default function Home() {
         {activeTab === 'reglas' && <RulesView />}
       </div>
 
-      {/* Admin/Settings (Floating - MOVED TO TOP to avoid overlap) */}
-      <div className="fixed top-24 right-6 z-50">
-        <SimulationToggle />
-      </div>
+      {/* Admin/Settings (Floating) */}
+      <SimulationToggle />
 
       {/* Senior-Friendly Bottom Navigation (WhatsApp Style) - 3 TABS */}
       <nav className="fixed bottom-0 left-0 w-full z-50 glass-dark border-t border-white/10 px-4 py-3 pb-8 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">

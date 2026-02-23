@@ -52,7 +52,10 @@ export default function RulesView() {
                             {rule.icon}
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-2xl font-black text-white leading-tight">{rule.title}</h3>
+                            <h3 className="text-2xl font-black text-white leading-tight">
+                                <span className="text-accent-primary mr-2">{rule.id}.</span>
+                                {rule.title}
+                            </h3>
                             <p className="text-text-muted text-lg leading-relaxed font-medium">
                                 {rule.description}
                             </p>

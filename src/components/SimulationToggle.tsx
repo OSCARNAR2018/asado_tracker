@@ -24,9 +24,8 @@ export default function SimulationToggle() {
   return (
     <button
       onClick={toggle}
-      className={`fixed bottom-6 right-6 z-50 p-4 rounded-full glass transition-all duration-300 flex items-center gap-2 group ${
-        isSimulated ? 'border-orange-500/50 shadow-orange-500/20' : 'border-green-500/50 shadow-green-500/20'
-      }`}
+      className={`fixed top-24 right-6 z-50 p-4 rounded-full glass transition-all duration-300 flex items-center gap-2 group ${isSimulated ? 'border-orange-500/50 shadow-orange-500/20' : 'border-green-500/50 shadow-green-500/20'
+        }`}
       aria-label={isSimulated ? 'Desactivar Simulación' : 'Activar Simulación'}
       title={isSimulated ? 'Modo Simulación Activo' : 'Modo Tiempo Real'}
     >

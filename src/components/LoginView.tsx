@@ -92,7 +92,7 @@ export default function LoginView({ onLogin }: LoginViewProps) {
                                 required
                             />
                         </div>
-                        <p className="text-[10px] text-white/30 italic ml-2 mt-1">
+                        <p className="text-xs text-accent-primary font-bold italic ml-2 mt-2">
                             ... porque después los vamos a votar ...
                         </p>
                     </div>
