@@ -1,0 +1,22 @@
+{
+  "name": "AsadoTracker",
+  "short_name": "Asado",
+  "description": "El registro inmutable del asado familiar.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ff9500",
+  "icons": [
+    {
+      "src": "/asado_app_icon.webp",
+      "sizes": "1024x1024",
+      "type": "image/webp"
+    },
+    {
+      "src": "/asado_app_icon.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

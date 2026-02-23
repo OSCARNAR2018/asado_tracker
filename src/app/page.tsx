@@ -1,65 +1,95 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Trophy, Cake, LogOut, LayoutGrid } from 'lucide-react';
+import LoginView from '@/components/LoginView';
+import LeaderboardView from '@/components/LeaderboardView';
+import VotingView from '@/components/VotingView';
+import SimulationToggle from '@/components/SimulationToggle';
 
 export default function Home() {
+  const [user, setUser] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'ranking' | 'voto'>('ranking');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('asado_user');
+    if (savedUser) setUser(savedUser);
+    setLoading(false);
+  }, []);
+
+  if (loading) return null;
+
+  if (!user) {
+    return (
+      <>
+        <LoginView onLogin={setUser} />
+        <SimulationToggle />
+      </>
+    );
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-[#0a0a0a] pb-32 selection:bg-accent-primary selection:text-black">
+      {/* Minimal Header */}
+      <header className="px-6 py-6 flex items-center justify-between pointer-events-none sticky top-0 z-30 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5">
+        <div className="pointer-events-auto">
+          <h1 className="text-2xl font-black italic uppercase tracking-tighter">
+            Asado<span className="text-gradient">Tracker</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+          <p className="text-[10px] text-accent-primary font-black uppercase tracking-[0.2em]">{user}</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <button
+          onClick={() => {
+            localStorage.removeItem('asado_user');
+            localStorage.removeItem('asado_wish');
+            setUser(null);
+          }}
+          className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-red-500/20 hover:text-red-500 transition-all border border-white/5 pointer-events-auto shadow-lg"
+          title="Cerrar Sesión"
+        >
+          <LogOut size={24} />
+        </button>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="container max-w-lg mx-auto pt-4 px-4">
+        <div className="animate-in fade-in duration-700">
+          {activeTab === 'ranking' ? <LeaderboardView /> : <VotingView />}
         </div>
       </main>
+
+      {/* Premium WhatsApp-style Bottom Nav */}
+      <nav className="fixed bottom-0 left-0 w-full px-4 pb-8 pt-4 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/95 to-transparent z-40">
+        <div className="max-w-md mx-auto glass rounded-[2.5rem] p-3 border border-white/10 shadow-2xl flex gap-3 h-24">
+          <button
+            onClick={() => setActiveTab('ranking')}
+            className={`flex-1 rounded-[1.8rem] flex flex-col items-center justify-center gap-1 transition-all duration-500 relative overflow-hidden ${activeTab === 'ranking'
+                ? 'bg-accent-primary text-black shadow-xl shadow-accent-primary/30 scale-100'
+                : 'text-zinc-500 hover:text-zinc-300 scale-95 opacity-70'
+              }`}
+          >
+            <Trophy size={activeTab === 'ranking' ? 32 : 28} strokeWidth={activeTab === 'ranking' ? 3 : 2} />
+            <span className="text-[11px] font-black uppercase tracking-widest">Ranking</span>
+            {activeTab === 'ranking' && <div className="absolute inset-0 bg-white/10 animate-pulse"></div>}
+          </button>
+
+          <button
+            onClick={() => setActiveTab('voto')}
+            className={`flex-1 rounded-[1.8rem] flex flex-col items-center justify-center gap-1 transition-all duration-500 relative overflow-hidden ${activeTab === 'voto'
+                ? 'bg-accent-primary text-black shadow-xl shadow-accent-primary/30 scale-100'
+                : 'text-zinc-500 hover:text-zinc-300 scale-95 opacity-70'
+              }`}
+          >
+            <Cake size={activeTab === 'voto' ? 32 : 28} strokeWidth={activeTab === 'voto' ? 3 : 2} />
+            <span className="text-[11px] font-black uppercase tracking-widest">Votar</span>
+            {activeTab === 'voto' && <div className="absolute inset-0 bg-white/10 animate-pulse"></div>}
+          </button>
+        </div>
+      </nav>
+
+      <SimulationToggle />
     </div>
   );
 }
