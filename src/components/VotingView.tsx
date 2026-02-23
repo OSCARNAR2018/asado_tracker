@@ -26,8 +26,8 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'fuego_sagrado',
         name: 'Fuego Sagrado',
-        image: 'https://images.unsplash.com/photo-1520110120185-3333330691e9?auto=format&fit=crop&q=80&w=500',
-        description: 'La mística del ritual que nos une.'
+        image: 'https://images.unsplash.com/photo-1558244661-91eaafc20473?auto=format&fit=crop&q=80&w=600',
+        description: 'La mística del ritual que nos une (cordero y brasas).'
     },
     {
         id: 'mesa_grande',
@@ -38,8 +38,8 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'brasas_y_abrazos',
         name: 'Brasas y Abrazos',
-        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=500',
-        description: 'Parrilla llena y corazón contento.'
+        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600',
+        description: 'Parrilla llena y corazón contento con los que más queremos.'
     },
     {
         id: 'la_herencia_del_1',
@@ -187,8 +187,8 @@ export default function VotingView({ username }: VotingViewProps) {
                                 onClick={() => handleVote(nameOption.id)}
                                 disabled={votingInProgress !== null}
                                 className={`w-full py-6 rounded-3xl font-black uppercase tracking-tighter text-xl flex items-center justify-center gap-3 transition-all ${votingInProgress === nameOption.id
-                                        ? 'bg-white/10 text-white/40 cursor-not-allowed'
-                                        : 'bg-white text-black hover:bg-accent-primary hover:text-white active:scale-95 shadow-[0_15px_30px_rgba(255,255,255,0.1)]'
+                                    ? 'bg-white/10 text-white/40 cursor-not-allowed'
+                                    : 'bg-white text-black hover:bg-accent-primary hover:text-white active:scale-95 shadow-[0_15px_30px_rgba(255,255,255,0.1)]'
                                     }`}
                             >
                                 {votingInProgress === nameOption.id ? (
