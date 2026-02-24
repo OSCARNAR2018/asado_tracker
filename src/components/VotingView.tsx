@@ -21,37 +21,37 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'tranquera_adentro',
         name: 'Tranquera Adentro',
-        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=500',
+        image: '',
         description: '"Dejando las preocupaciones del lado de afuera".'
     },
     {
         id: 'fuego_sagrado',
         name: 'Fuego Sagrado',
-        image: 'https://images.unsplash.com/photo-1558244661-91eaafc20473?auto=format&fit=crop&q=80&w=600',
+        image: '',
         description: 'La mística del ritual que nos une (cordero y brasas).'
     },
     {
         id: 'mesa_grande',
         name: 'Mesa Grande',
-        image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=500',
+        image: '',
         description: 'Humildad, familia y unión.'
     },
     {
         id: 'brasas_y_abrazos',
         name: 'Brasas y Abrazos',
-        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600',
+        image: '',
         description: 'Parrilla llena y corazón contento con los que más queremos.'
     },
     {
         id: 'la_herencia_del_1',
         name: 'La Herencia del 1°',
-        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=500',
+        image: '',
         description: '40 años de tradición familiar.'
     },
     {
         id: 'asado_tracker',
         name: 'AsadoTracker',
-        image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=500',
+        image: '',
         description: 'El nombre actual (tecnológico).'
     }
 ];
@@ -156,7 +156,7 @@ export default function VotingView({ username }: VotingViewProps) {
                     <div className="p-3 rounded-2xl bg-accent-primary/20 text-accent-primary">
                         <Award size={32} />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa</h2>
+                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.2</span></h2>
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-2xl font-bold text-white">¿Cómo deberíamos llamarnos?</h3>
