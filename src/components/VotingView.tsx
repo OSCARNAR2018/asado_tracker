@@ -1,5 +1,5 @@
 'use client';
-// Build trigger: Final visual refinements sync
+// Build trigger: Cache bust sync v2.0
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
@@ -27,7 +27,7 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'fuego_sagrado',
         name: 'Fuego Sagrado',
-        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=600',
+        image: '/images/fuego-sagrado.jfif?v=2',
         description: 'La mística del ritual que nos une (cordero y brasas).'
     },
     {
@@ -39,7 +39,7 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'brasas_y_abrazos',
         name: 'Brasas y Abrazos',
-        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600',
+        image: '/images/brasas-abrazos.jfif?v=2',
         description: 'Parrilla llena y corazón contento con los que más queremos.'
     },
     {
@@ -156,7 +156,7 @@ export default function VotingView({ username }: VotingViewProps) {
                     <div className="p-3 rounded-2xl bg-accent-primary/20 text-accent-primary">
                         <Award size={32} />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.5</span></h2>
+                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.6</span></h2>
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-2xl font-bold text-white">¿Cómo deberíamos llamarnos?</h3>
