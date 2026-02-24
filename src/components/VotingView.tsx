@@ -21,7 +21,7 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'tranquera_adentro',
         name: 'Tranquera Adentro',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600',
         description: '"Dejando las preocupaciones del lado de afuera".'
     },
     {
@@ -156,7 +156,7 @@ export default function VotingView({ username }: VotingViewProps) {
                     <div className="p-3 rounded-2xl bg-accent-primary/20 text-accent-primary">
                         <Award size={32} />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.2</span></h2>
+                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.3</span></h2>
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-2xl font-bold text-white">¿Cómo deberíamos llamarnos?</h3>
