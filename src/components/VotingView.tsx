@@ -27,7 +27,7 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'fuego_sagrado',
         name: 'Fuego Sagrado',
-        image: 'https://images.unsplash.com/photo-1558244661-91eaafc20473?auto=format&fit=crop&q=80&w=600',
+        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=600',
         description: 'La mística del ritual que nos une (cordero y brasas).'
     },
     {
@@ -39,19 +39,19 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'brasas_y_abrazos',
         name: 'Brasas y Abrazos',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600',
         description: 'Parrilla llena y corazón contento con los que más queremos.'
     },
     {
         id: 'la_herencia_del_1',
         name: 'La Herencia del 1°',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600',
         description: '40 años de tradición familiar.'
     },
     {
         id: 'asado_tracker',
         name: 'AsadoTracker',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=600',
         description: 'El nombre actual (tecnológico).'
     }
 ];
@@ -156,7 +156,7 @@ export default function VotingView({ username }: VotingViewProps) {
                     <div className="p-3 rounded-2xl bg-accent-primary/20 text-accent-primary">
                         <Award size={32} />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.4</span></h2>
+                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.5</span></h2>
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-2xl font-bold text-white">¿Cómo deberíamos llamarnos?</h3>
