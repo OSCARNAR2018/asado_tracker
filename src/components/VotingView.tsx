@@ -1,5 +1,5 @@
 'use client';
-// Build trigger: Cache bust sync v2.0
+// Build trigger: Cache bust sync v3.0 - Image Height Adjusted
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
@@ -27,7 +27,7 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'fuego_sagrado',
         name: 'Fuego Sagrado',
-        image: '/images/fuego-sagrado.jfif?v=2',
+        image: '/images/fuego-sagrado.jfif?v=3',
         description: 'La mística del ritual que nos une (cordero y brasas).'
     },
     {
@@ -39,7 +39,7 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'brasas_y_abrazos',
         name: 'Brasas y Abrazos',
-        image: '/images/brasas-abrazos.jfif?v=2',
+        image: '/images/brasas-abrazos.jfif?v=3',
         description: 'Parrilla llena y corazón contento con los que más queremos.'
     },
     {
@@ -169,7 +169,7 @@ export default function VotingView({ username }: VotingViewProps) {
             <div className="grid grid-cols-1 gap-6">
                 {APP_NAMES.map((nameOption) => (
                     <div key={nameOption.id} className="group relative glass rounded-[2.5rem] overflow-hidden border-white/5 shadow-2xl transition-all hover:scale-[1.02] hover:border-accent-primary/30">
-                        <div className="h-48 w-full relative overflow-hidden">
+                        <div className="h-80 w-full relative overflow-hidden">
                             <img
                                 src={nameOption.image}
                                 alt={nameOption.name}
