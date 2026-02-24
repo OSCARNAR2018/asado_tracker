@@ -27,13 +27,13 @@ const APP_NAMES: AppNameOption[] = [
     {
         id: 'fuego_sagrado',
         name: 'Fuego Sagrado',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1558244661-91eaafc20473?auto=format&fit=crop&q=80&w=600',
         description: 'La mística del ritual que nos une (cordero y brasas).'
     },
     {
         id: 'mesa_grande',
         name: 'Mesa Grande',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=600',
         description: 'Humildad, familia y unión.'
     },
     {
@@ -156,7 +156,7 @@ export default function VotingView({ username }: VotingViewProps) {
                     <div className="p-3 rounded-2xl bg-accent-primary/20 text-accent-primary">
                         <Award size={32} />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.3</span></h2>
+                    <h2 className="text-4xl font-black uppercase tracking-tighter">Demo Participativa <span className="text-xs opacity-30">v1.4</span></h2>
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-2xl font-bold text-white">¿Cómo deberíamos llamarnos?</h3>
